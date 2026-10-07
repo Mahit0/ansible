@@ -1,0 +1,19 @@
+- name : Mon petit Playbook 
+  hosts : all
+  become : true
+  tasks :
+  - name : check authorisation SSH
+    ansible.builtin.blockinfile : 
+      path : /home/ansible/.ssh/authorized_keys
+      backup : yes 
+      block : "from='10.81.200.57' ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAKcYJyKUnIB0kLWs0PgPZ9Z7VB44RgYywpW+RUXvhp/ ansible@srv-ansible"
+
+  - name : check authorisation user ansible 
+    ansible.builtin.user : 
+      name : ansible
+      password : !
+  
+  - name : install bind 
+    ansible.builtin.dnf :
+      name : bind
+      state : present
