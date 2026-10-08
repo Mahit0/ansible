@@ -1,0 +1,26 @@
+---
+# On gen le MDP du connard en question 
+- name : Génération du MDP 
+  
+# tasks file for roles/add_user_administration
+- name : Creation de l'utilisateur present dans le vars/main.yml
+  vars_files: 
+    - vars/main.yml
+    - vars/vault.yml
+  ansible.builtin.set_fact:
+    generated_admin_password: "{{ lookup('ansible.ansible.builtin.password','/dev/null length='~password_length ~'chars=ascii_letters,digits,hexdigest')  }}"
+    no_log: true
+  ansible.builtin.user : 
+    name : {{ admin_user }}
+    password : {{ generated_admin_password }}
+  
+# On donne les droits sudoers with mdp au connard 
+- name : Donnation des droits sudoers à notre l'utilisateur
+  vars_files:
+    - vars/main.yml
+  ansible.builtin.blockinfile : 
+    path : /etc/sudoers
+    insertafter: "EOF"
+    block : |
+      {{ admin_user  }} ALL=(ALL) ALL
+    

@@ -1,0 +1,21 @@
+---
+# tasks file for roles/ssh_config
+- name : Partage des authorized_keys 
+  ansible.builtin.copy:
+    src: files/authorized_keys
+    dest: /home/ansible/.ssh/auhorized_keys
+    backup: true 
+    owner : ansible
+    group : ansible
+    
+# On secu sshd selon les requirements qui nous ont été donner plus tot
+- name : Configuration de SSHD
+  ansible.builtin.copy : 
+    src: files/sshd_config
+    dest: /etc/ssh/sshd_config
+    owner: root
+    group: root
+    backup: yes 
+  ansible.builtin.service:
+    name: sshd
+    state: restarted

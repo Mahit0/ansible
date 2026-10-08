@@ -1,0 +1,17 @@
+---
+# On s'occupe d'installer sshd et bind9 si c'est pas déjà fait 
+- name : Installer bind 9 et SSHD
+  ansible.builtin.dnf : 
+    name : 
+      - bind9
+      - sshd 
+    state : present
+
+# On s'occupe mtn du service named (bind9)
+- name : Configuration de named 
+  ansible.builtin.blockinfile:
+    path : /etc/named.conf
+    backup : yes 
+    insertafter: "EOF"
+    block : |
+
