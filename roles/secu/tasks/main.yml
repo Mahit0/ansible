@@ -3,8 +3,8 @@
 - name : Installer bind 9 et SSHD
   ansible.builtin.dnf : 
     name : 
-      - bind9
-      - sshd 
+      - bind
+      - openssh-server 
     state : present
 
 # On s'occupe mtn du service named (bind9)
@@ -14,5 +14,5 @@
     backup : yes 
     insertafter: "EOF"
     block : |
-      
+
 
