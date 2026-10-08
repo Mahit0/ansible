@@ -1,6 +1,6 @@
 all :
   hosts :
     staging :
-      ansible_host : 10.81.200.58
+      ansible_host : 192.168.31.101
     prod :
-      ansible_host : 10.81.200.59
+      ansible_host : 192.168.31.100
