@@ -4,5 +4,3 @@ all :
       ansible_host : 10.81.200.58
     prod :
       ansible_host : 10.81.200.59
-    windaube : 
-      ansible_host : 10.81.200.103

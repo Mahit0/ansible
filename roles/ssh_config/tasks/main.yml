@@ -1,0 +1,33 @@
+---
+- name: Création du dossier .ssh de l'utilisateur ansible
+  ansible.builtin.file:
+    path: /home/ansible/.ssh
+    state: directory
+    owner: ansible
+    group: ansible
+    mode: "0700"
+
+- name: Partage des authorized_keys
+  ansible.builtin.copy:
+    src: authorized_keys
+    dest: /home/ansible/.ssh/authorized_keys
+    owner: ansible
+    group: ansible
+    mode: "0600"
+    backup: true
+
+# On sécurise sshd selon les requirements
+- name: Configuration de sshd
+  ansible.builtin.copy:
+    src: sshd_config
+    dest: /etc/ssh/sshd_config
+    owner: root
+    group: root
+    mode: "0644"
+    backup: true
+    validate: /usr/sbin/sshd -t -f %s
+
+- name : on restart sshd
+  ansible.builtin.service:
+    name : sshd
+    state : restarted

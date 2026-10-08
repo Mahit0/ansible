@@ -1,0 +1,8 @@
+Include /etc/ssh/sshd_config.d/*.conf
+AuthorizedKeysFile      .ssh/authorized_keys
+Subsystem       sftp    /usr/libexec/openssh/sftp-server
+
+# On authorise uniquement l'utilisateur ansible à se co mais seulement avec une clé privée.
+Match User Ansible
+AllowUsers ansible@10.81.200.57
+PasswordAuthentication no

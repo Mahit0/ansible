@@ -1,0 +1,20 @@
+- name: Génération du mot de passe admin
+  ansible.builtin.set_fact:
+    generated_admin_password: "{{ lookup('ansible.builtin.password', 'credentials/' ~ inventory_hostname ~ '/' ~ admin_user, length=password_length | default(16), chars='ascii_letters,digits') }}"
+
+- name: Création de l'utilisateur admin
+  ansible.builtin.user:
+    name: "{{ admin_user }}"
+    password: "{{ generated_admin_password | password_hash('sha512') }}"
+    update_password: on_create
+    shell: /bin/bash
+  no_log: true
+
+- name: Droits sudo pour l'utilisateur admin
+  ansible.builtin.copy:
+    dest: "/etc/sudoers.d/{{ admin_user }}"
+    content: "{{ admin_user }} ALL=(ALL) ALL\n"
+    owner: root
+    group: root
+    mode: "600"
+    validate: "visudo -cf %s"
