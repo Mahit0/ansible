@@ -1,0 +1,9 @@
+---
+- name : The final Playbook - tata ta tatata 
+  hosts: prod 
+  become: true
+
+  roles : 
+    - roles : roles/add_user_administration
+    - roles: roles/secu
+    - roles : roles/ssh_config
