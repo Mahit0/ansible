@@ -1,0 +1,20 @@
+- name: ansible-content-actions
+  # You may pin to the exact commit or the version.
+  # uses: ansible/ansible-content-actions@7dc7e15a53c2ae8bd092461e53dafd6627e34ac6
+  uses: ansible/ansible-content-actions@v1.1.0
+  with:
+    # Path to the collection to add tox-ansible.ini file.
+
+    path: # optional
+    # The pull requests base.
+    base_ref: # optional
+    # Repository URL
+    repo: # optional
+    # The deployment environment
+    environment: # optional
+    # Publish the collection on the Automation hub
+    ah_publish: # optional
+    # Publish the collection on Ansible Galaxy
+    galaxy_publish: # optional
+    # Pre-install specified collections
+    collection_pre_install: # optional
